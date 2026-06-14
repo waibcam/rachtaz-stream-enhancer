@@ -1,0 +1,17 @@
+# Build artifacts (distributed via GitHub Releases instead)
+dist/
+*.zip
+*.zip.tmp
+
+# Python
+__pycache__/
+*.pyc
+
+# Local working captures (RachtaZ stream footage — not republished here)
+screenshots/_user_capture.png
+screenshots/Rachta_Stream.png
+screenshots/store-shot-*.png
+
+# OS junk
+.DS_Store
+Thumbs.db

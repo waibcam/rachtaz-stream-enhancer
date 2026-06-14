@@ -1,0 +1,347 @@
+/* ============================================================
+   RachtaZ Stream Enhancer — styles.css  (v2)
+   Player buttons, game panel, timeline markers.
+   Accent color: RachtaZ red (#ff4d4d).
+   ============================================================ */
+
+:root {
+  --rse-accent: #ff4d4d;
+  --rse-gold:   #f0c040;   /* RachtaZ gold (from his avatar/thumbnail) */
+}
+
+/* ── RachtaZ gold seek bar — scoped to RachtaZ videos via html.rse-rachtaz ── */
+html.rse-rachtaz .ytp-progress-bar .ytp-play-progress,
+html.rse-rachtaz .ytp-progress-bar .ytp-swatch-background-color {
+  background: var(--rse-gold) !important;
+}
+html.rse-rachtaz .ytp-progress-bar .ytp-scrubber-button {
+  background: var(--rse-gold) !important;
+}
+
+/* ── Injected controls container ──────────────────────────────────────────── */
+#rse-controls {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  vertical-align: top;
+}
+
+/* ── Icon buttons (Previous / List) ───────────────────────────────────────── */
+#rse-controls .rse-icon-btn {
+  width: 40px;
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  opacity: 0.9;
+  transition: opacity 0.1s;
+}
+#rse-controls .rse-icon-btn:hover:not(.rse-disabled) { opacity: 1; }
+#rse-controls .rse-icon-btn svg { width: 22px; height: 22px; }
+
+/* "List" button active (panel open) */
+#rse-controls #rse-toggle-btn.rse-on svg path { fill: var(--rse-accent); }
+
+/* ── "Next — Game X" text button ──────────────────────────────────────────── */
+#rse-next-btn.rse-next-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  height: 100%;
+  padding: 0 10px 0 6px;
+  width: auto;
+  opacity: 1;
+  cursor: pointer;
+}
+#rse-next-btn .rse-skip-icon {
+  display: inline-flex;
+  align-items: center;
+}
+#rse-next-btn .rse-skip-icon svg { width: 18px; height: 18px; }
+
+#rse-next-btn .rse-next-label {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 220px;
+  font-size: 1.3rem;     /* same as YouTube's chapter title */
+  font-weight: 500;
+  line-height: 1;
+  color: #fff;
+}
+#rse-next-btn.rse-next-btn:hover:not(.rse-disabled) .rse-next-label {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+/* ── Disabled state ───────────────────────────────────────────────────────── */
+#rse-controls .rse-disabled {
+  opacity: 0.35 !important;
+  cursor: default !important;
+  pointer-events: none;
+}
+
+/* ── Flash on jump ────────────────────────────────────────────────────────── */
+#rse-controls .rse-pulse svg path {
+  animation: rse-icon-pulse 0.35s ease;
+}
+@keyframes rse-icon-pulse {
+  0%   { fill: var(--rse-accent); }
+  100% { fill: #ffffff; }
+}
+
+/* ── Chapter markers on the progress bar ──────────────────────────────────── */
+.rse-marker-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 35;
+}
+.rse-marker {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  transform: translateX(-50%);
+  background: var(--rse-accent);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
+  border-radius: 1px;
+  pointer-events: none;
+}
+
+/* Shared entrance animation for the bottom toasts (Like). */
+@keyframes rse-resume-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Top-center entrance (keeps the horizontal centering). */
+@keyframes rse-toast-top-in {
+  from { opacity: 0; transform: translate(-50%, -10px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* ── Resume toast (medium, bottom-left) ───────────────────────────────────── */
+.rse-resume {
+  position: absolute;
+  left: 16px;
+  bottom: 80px;
+  z-index: 62;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px 12px 18px;
+  background: rgba(20, 20, 20, 0.95);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+  font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+  font-size: 16px;
+  color: #eee;
+  animation: rse-resume-in 0.2s ease;
+}
+.rse-resume-txt b { color: #fff; font-variant-numeric: tabular-nums; }
+.rse-resume-go {
+  background: var(--rse-accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.rse-resume-go:hover { filter: brightness(1.12); }
+.rse-resume-x {
+  background: none;
+  border: none;
+  color: #aaa;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  padding: 3px 6px;
+  border-radius: 5px;
+}
+.rse-resume-x:hover { color: #fff; background: rgba(255, 255, 255, 0.1); }
+
+/* ── Like toast (big, top-center — one-click, never automatic) ────────────── */
+.rse-like {
+  position: absolute;
+  top: 64px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 62;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 15px 18px 15px 22px;
+  background: rgba(20, 20, 20, 0.95);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.6);
+  font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+  font-size: 20px;
+  color: #eee;
+  animation: rse-toast-top-in 0.22s ease;
+}
+.rse-like-txt b { color: #fff; }
+.rse-like-go {
+  background: var(--rse-accent);
+  color: #fff;
+  border: none;
+  border-radius: 9px;
+  padding: 10px 20px;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.rse-like-go:hover { filter: brightness(1.12); }
+.rse-like-x {
+  background: none;
+  border: none;
+  color: #aaa;
+  cursor: pointer;
+  font-size: 19px;
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.rse-like-x:hover { color: #fff; background: rgba(255, 255, 255, 0.1); }
+
+/* ── "Games" panel ────────────────────────────────────────────────────────── */
+.rse-panel {
+  position: absolute;
+  top: 56px;
+  right: 12px;
+  width: 290px;
+  max-height: 62%;
+  display: flex;
+  flex-direction: column;
+  background: rgba(20, 20, 20, 0.94);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+  z-index: 62;
+  overflow: hidden;
+  font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+  opacity: 1;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.rse-panel.rse-hidden {
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+}
+
+.rse-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+.rse-panel-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.2px;
+}
+.rse-panel-close {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  line-height: 1;
+}
+.rse-panel-close:hover { color: #fff; background: rgba(255, 255, 255, 0.1); }
+
+.rse-panel-list {
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  overflow-y: auto;
+}
+.rse-panel-list::-webkit-scrollbar { width: 8px; }
+.rse-panel-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 4px;
+}
+
+.rse-panel-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 9px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.rse-panel-item:hover { background: rgba(255, 255, 255, 0.08); }
+.rse-panel-item.rse-active {
+  background: rgba(255, 77, 77, 0.16);
+  box-shadow: inset 2px 0 0 var(--rse-accent);
+}
+
+.rse-item-num {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #ccc;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+}
+.rse-panel-item.rse-active .rse-item-num {
+  background: var(--rse-accent);
+  color: #fff;
+}
+.rse-item-time {
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+  font-size: 11px;
+  color: var(--rse-accent);
+  font-weight: 600;
+  min-width: 52px;
+}
+.rse-item-label {
+  flex: 1;
+  font-size: 13px;
+  color: #eee;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rse-item-copy {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: #aaa;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.1s, color 0.1s, background 0.1s;
+}
+.rse-panel-item:hover .rse-item-copy { opacity: 1; }
+.rse-item-copy:hover { color: #fff; background: rgba(255, 255, 255, 0.12); }
+.rse-item-copy.rse-copied { color: var(--rse-accent); opacity: 1; }
+.rse-item-copy svg { width: 16px; height: 16px; }

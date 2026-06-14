@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "RachtaZ Stream Enhancer",
+  "version": "1.0.0",
+  "description": "Fan-made (unofficial) - timecode navigation for RachtaZ VODs: timeline chapters, game list, N/P/L shortcuts.",
+  "homepage_url": "https://github.com/waibcam/rachtaz-stream-enhancer",
+  "permissions": ["storage"],
+  "host_permissions": ["https://www.youtube.com/*"],
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/watch*"],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16":  "icons/icon16.png",
+      "48":  "icons/icon48.png",
+      "64":  "icons/icon64.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16":  "icons/icon16.png",
+    "48":  "icons/icon48.png",
+    "64":  "icons/icon64.png",
+    "128": "icons/icon128.png"
+  }
+}

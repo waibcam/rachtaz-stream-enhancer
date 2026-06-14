@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RachtaZ Stream Enhancer</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root { --accent: #ff4d4d; }
+
+    body {
+      width: 300px;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #0f0f0f;
+      color: #e0e0e0;
+      padding: 16px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #2a2a2a;
+    }
+    header .logo { font-size: 22px; }
+    header h1 { font-size: 13px; font-weight: 700; color: #fff; line-height: 1.3; }
+    header small { display: block; font-size: 10px; color: #888; font-weight: 400; }
+
+    .status-card {
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 12px;
+      line-height: 1.5;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .status-card .icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    .status-card .text { flex: 1; }
+    .status-card .label { font-weight: 700; font-size: 12px; }
+    .status-card .desc  { color: #aaa; font-size: 11px; margin-top: 2px; }
+
+    .status-idle      { background: #1a1a1a; border: 1px solid #2a2a2a; }
+    .status-loading   { background: #1a1a2e; border: 1px solid #3a3a6e; }
+    .status-found     { background: #0d2218; border: 1px solid #2a6b44; }
+    .status-not-found { background: #221a0d; border: 1px solid #6b4a2a; }
+    .status-error     { background: #2a0d0d; border: 1px solid #6b2a2a; }
+
+    /* ── Game list ───────────────────────────────────────── */
+    #games-wrap { margin-top: 12px; display: none; }
+    #games-head {
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 11px; color: #888; margin-bottom: 6px;
+    }
+    #games-head b { color: #fff; }
+    #games-list {
+      list-style: none;
+      max-height: 220px;
+      overflow-y: auto;
+      border: 1px solid #222;
+      border-radius: 8px;
+      background: #161616;
+    }
+    #games-list::-webkit-scrollbar { width: 8px; }
+    #games-list::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+    #games-list li {
+      display: flex; align-items: center; gap: 8px;
+      padding: 7px 10px;
+      cursor: pointer;
+      border-bottom: 1px solid #1e1e1e;
+      transition: background 0.1s;
+    }
+    #games-list li:last-child { border-bottom: none; }
+    #games-list li:hover { background: #222; }
+    #games-list .g-num {
+      flex-shrink: 0; width: 18px; height: 18px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 700; color: #ccc;
+      background: #2a2a2a; border-radius: 50%;
+    }
+    #games-list .g-time {
+      flex-shrink: 0; font-size: 11px; font-weight: 600;
+      color: var(--accent); min-width: 50px; font-variant-numeric: tabular-nums;
+    }
+    #games-list .g-label {
+      flex: 1; font-size: 12px; color: #eee;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    #games-list .g-copy {
+      flex-shrink: 0;
+      background: none; border: none; color: #888;
+      cursor: pointer; padding: 3px; border-radius: 4px;
+      display: inline-flex; align-items: center;
+      transition: color 0.1s, background 0.1s;
+    }
+    #games-list .g-copy:hover { color: #fff; background: #333; }
+    #games-list .g-copy.copied { color: var(--accent); }
+    #games-list .g-copy svg { width: 14px; height: 14px; }
+
+    /* ── Action buttons ──────────────────────────────────── */
+    .actions { margin-top: 12px; display: flex; gap: 8px; }
+    .actions button {
+      flex: 1;
+      background: #1e1e1e;
+      border: 1px solid #333;
+      color: #ddd;
+      font-size: 11px;
+      padding: 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.1s, border-color 0.1s;
+    }
+    .actions button:hover { background: #262626; border-color: #444; }
+
+    /* ── Setting toggle ──────────────────────────────────── */
+    .setting {
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: #bbb;
+      cursor: pointer;
+      user-select: none;
+    }
+    .setting input {
+      accent-color: var(--accent);
+      width: 14px;
+      height: 14px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Shortcuts legend ────────────────────────────────── */
+    .shortcuts {
+      margin-top: 12px;
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      font-size: 10px;
+      color: #888;
+    }
+    .shortcuts .row { display: flex; align-items: center; gap: 4px; }
+    .key {
+      display: inline-block;
+      background: #2a2a2a;
+      border: 1px solid #444;
+      border-radius: 3px;
+      padding: 1px 6px;
+      font-family: monospace;
+      font-size: 11px;
+      color: #ccc;
+    }
+
+    footer {
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px solid #2a2a2a;
+      font-size: 10px;
+      color: #555;
+      text-align: center;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">🎮</div>
+    <h1>
+      RachtaZ Stream Enhancer
+      <small>Fan-made (unofficial) extension · by @Kamille92</small>
+    </h1>
+  </header>
+
+  <div id="status-card" class="status-card status-idle">
+    <div class="icon" id="status-icon">💤</div>
+    <div class="text">
+      <div class="label" id="status-label">Idle</div>
+      <div class="desc"  id="status-desc">Open a YouTube video to get started.</div>
+    </div>
+  </div>
+
+  <div id="games-wrap">
+    <div id="games-head">
+      <span><b id="games-count">0</b> games detected</span>
+      <span>click to jump to a game</span>
+    </div>
+    <ul id="games-list"></ul>
+  </div>
+
+  <div class="actions">
+    <button id="rescan-btn" title="Force a fresh scan of the comments">🔄 Rescan</button>
+  </div>
+
+  <label class="setting">
+    <input type="checkbox" id="resume-toggle" />
+    <span>Resume playback where I left off</span>
+  </label>
+
+  <label class="setting">
+    <input type="checkbox" id="like-toggle" />
+    <span>Suggest liking RachtaZ's video</span>
+  </label>
+
+  <label class="setting">
+    <input type="checkbox" id="gold-toggle" />
+    <span>Gold progress bar on RachtaZ videos</span>
+  </label>
+
+  <div class="shortcuts">
+    <span class="row"><span class="key">N</span> next</span>
+    <span class="row"><span class="key">P</span> previous</span>
+    <span class="row"><span class="key">L</span> list</span>
+  </div>
+
+  <footer>
+    Fan-made, unofficial project · not affiliated with @RachtaZ<br>
+    Works only on @RachtaZ VODs
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>
