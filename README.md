@@ -4,6 +4,8 @@
 
 Browser extension to easily navigate [@RachtaZ](https://www.youtube.com/@RachtaZ) VODs using the timecodes posted in the comments by **@Kamille92**.
 
+**📥 Download (all browsers):** https://waibcam.github.io/rachtaz-stream-enhancer/
+
 ---
 
 ## ✨ Features
