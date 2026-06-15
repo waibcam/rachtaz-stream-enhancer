@@ -7,6 +7,28 @@
 <meta name="description" content="Fan-made browser extension to navigate RachtaZ stream VODs by timecodes: chapters, game list, shareable links, resume and more." />
 <link rel="icon" href="favicon.ico" sizes="any" />
 <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/waibcam/rachtaz-stream-enhancer/main/icons/icon128.png" />
+<link rel="canonical" href="https://waibcam.github.io/rachtaz-stream-enhancer/" />
+<meta name="author" content="Kamille92" />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#0e0e10" />
+<meta name="keywords" content="RachtaZ, RachtaZ extension, RachtaZ VOD, YouTube chapters, stream timecodes, YouTube extension, Chrome extension, Edge, Opera, Firefox, Kamille92" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="RachtaZ Stream Enhancer" />
+<meta property="og:title" content="RachtaZ Stream Enhancer — browser extension" />
+<meta property="og:description" content="Turn @Kamille92's timecodes into clickable chapters on RachtaZ stream VODs. Free, fan-made — for Chrome, Edge, Opera and Firefox." />
+<meta property="og:url" content="https://waibcam.github.io/rachtaz-stream-enhancer/" />
+<meta property="og:image" content="https://waibcam.github.io/rachtaz-stream-enhancer/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="en_US" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="RachtaZ Stream Enhancer" />
+<meta name="twitter:description" content="Clickable chapters on RachtaZ stream VODs — free, fan-made. Chrome · Edge · Opera · Firefox." />
+<meta name="twitter:image" content="https://waibcam.github.io/rachtaz-stream-enhancer/og-image.png" />
 <style>
   :root{
     --bg:#0e0e10; --card:#17171a; --line:rgba(255,255,255,.09);
@@ -151,6 +173,23 @@
       "</"+tag+">";
   }).join("");
   document.getElementById("downloads").innerHTML = html;
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "RachtaZ Stream Enhancer",
+  "applicationCategory": "BrowserApplication",
+  "operatingSystem": "Chrome, Edge, Opera, Firefox",
+  "description": "Fan-made browser extension that turns the timecodes posted by @Kamille92 into clickable chapters on RachtaZ stream VODs, with shareable links, resume and more.",
+  "url": "https://waibcam.github.io/rachtaz-stream-enhancer/",
+  "downloadUrl": "https://chromewebstore.google.com/detail/eljgclobblhfngpnfgkoncdjpnmffbll",
+  "softwareVersion": "1.0.1",
+  "isAccessibleForFree": true,
+  "author": { "@type": "Person", "name": "Kamille92", "url": "https://hunt.kamille.ovh/" },
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
 </script>
 </body>
 </html>

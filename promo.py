@@ -165,12 +165,41 @@ def build_marquee(avatar):
     img.convert("RGB").save(os.path.join(OUT, "promo-marquee-1400x560.png"))
 
 
+def build_og(avatar):
+    # Social card (Open Graph / Twitter) — 1200x630 — saved into docs/.
+    W, H = 1200, 630
+    img = vgrad(W, H, (26, 22, 30), (9, 9, 12))
+    img = glow(img, 250, 300, 340, ACCENT, 50)
+    img = glow(img, 1000, 100, 240, GOLD, 24)
+    img = diagonals(img, 900, -40, n=3, gap=30, length=560)
+
+    av = rounded(avatar.resize((230, 230), Image.LANCZOS), 40)
+    img.paste(av, (95, 200), av)
+
+    ov = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    d = ImageDraw.Draw(ov)
+    d.text((380, 172), "RachtaZ Stream Enhancer", font=bold(58), fill=WHITE)
+    d.text((382, 256), "Timecode chapters for RachtaZ stream VODs", font=reg(28), fill=GREY)
+    timeline(d, 384, 338, 600, 9, FRACS, played=0.46)
+    x = 384
+    for txt in ["Chrome", "Edge", "Opera", "Firefox"]:
+        w, h = pill(d, x, 374, txt, semi(20), WHITE, (255, 255, 255, 26), pad=(14, 8))
+        x += w + 10
+    pill(d, 384, 436, "free · fan-made · no ads · no tracking", reg(18), GREY, (255, 255, 255, 16))
+
+    img = Image.alpha_composite(img, ov)
+    out = os.path.join(ROOT, "docs", "og-image.png")
+    img.convert("RGB").save(out)
+    return out
+
+
 def main():
     avatar, hi = load_avatar()
     print("avatar source:", "clipboard hi-res" if hi else "icon128 (upscaled)", avatar.size)
     build_small(avatar)
     build_marquee(avatar)
-    print("Wrote promo/promo-small-440x280.png and promo/promo-marquee-1400x560.png")
+    build_og(avatar)
+    print("Wrote promo tiles + docs/og-image.png")
 
 
 if __name__ == "__main__":
