@@ -2,6 +2,10 @@
 
 All notable changes to **RachtaZ Stream Enhancer**.
 
+## 1.0.1
+- `homepage_url` now points to the download hub page:
+  https://waibcam.github.io/rachtaz-stream-enhancer/
+
 ## 1.0.0 — First public release
 
 First version published to the Chrome Web Store, Edge Add-ons, Opera add-ons and

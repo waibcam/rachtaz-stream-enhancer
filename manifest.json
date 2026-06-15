@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
   "name": "RachtaZ Stream Enhancer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Fan-made (unofficial) - timecode navigation for RachtaZ VODs: timeline chapters, game list, N/P/L shortcuts.",
-  "homepage_url": "https://github.com/waibcam/rachtaz-stream-enhancer",
+  "homepage_url": "https://waibcam.github.io/rachtaz-stream-enhancer/",
   "permissions": ["storage"],
   "host_permissions": ["https://www.youtube.com/*"],
   "content_scripts": [
