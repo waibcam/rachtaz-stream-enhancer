@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RachtaZ Stream Enhancer — download</title>
+<meta name="description" content="Fan-made browser extension to navigate RachtaZ stream VODs by timecodes: chapters, game list, shareable links, resume and more." />
+<style>
+  :root{
+    --bg:#0e0e10; --card:#17171a; --line:rgba(255,255,255,.09);
+    --gold:#f0c040; --red:#ff4d4d; --text:#e9e9ec; --muted:#9a9aa2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Segoe UI',system-ui,-apple-system,Roboto,Arial,sans-serif;
+    background:radial-gradient(900px 500px at 50% -120px,#241f17 0%,var(--bg) 60%);
+    color:var(--text);min-height:100vh;line-height:1.6;
+    display:flex;flex-direction:column;align-items:center;padding:40px 18px 60px;
+  }
+  .wrap{width:100%;max-width:860px}
+  header{text-align:center;margin-bottom:34px}
+  .avatar{width:96px;height:96px;border-radius:22px;border:2px solid rgba(240,192,64,.5);
+    object-fit:cover;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  h1{font-size:30px;font-weight:700;margin:16px 0 4px;letter-spacing:.2px}
+  .tag{color:var(--muted);font-size:16px}
+  .badge{display:inline-block;margin-top:12px;font-size:12px;color:var(--muted);
+    border:1px solid var(--line);background:rgba(255,255,255,.04);
+    padding:4px 12px;border-radius:999px}
+
+  h2{font-size:14px;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);
+    font-weight:700;margin:34px 0 14px;text-align:center}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
+  .card{position:relative;background:var(--card);border:1px solid var(--line);
+    border-radius:16px;padding:20px 18px;text-align:center;text-decoration:none;
+    color:var(--text);transition:transform .12s,border-color .12s,background .12s;
+    display:flex;flex-direction:column;align-items:center;gap:6px}
+  a.card:hover{transform:translateY(-3px);border-color:rgba(240,192,64,.5);background:#1c1c20}
+  .card.soon{opacity:.62;cursor:default}
+  .card .ico{width:40px;height:40px;margin-bottom:4px}
+  .card .name{font-size:18px;font-weight:700}
+  .card .state{font-size:12px;font-weight:600}
+  .state.ok{color:var(--gold)} .state.rev{color:var(--muted)}
+  .card .cta{margin-top:10px;font-size:13px;font-weight:700;color:#0e0e10;
+    background:var(--gold);padding:8px 14px;border-radius:9px}
+  .card.soon .cta{background:rgba(255,255,255,.10);color:var(--muted)}
+  .card.alt .cta{background:rgba(240,192,64,.16);color:var(--gold)}
+  .card .note{font-size:11px;color:var(--muted);margin-top:8px;min-height:14px}
+  .rec{position:absolute;top:-10px;left:50%;transform:translateX(-50%);
+    background:var(--red);color:#fff;font-size:11px;font-weight:700;
+    padding:3px 10px;border-radius:999px;white-space:nowrap}
+  .card.rec-on{border-color:var(--red)}
+
+  .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:10px 22px;margin-top:6px}
+  .features li{list-style:none;color:#cfcfd4;font-size:14px;padding-left:22px;position:relative}
+  .features li::before{content:'';position:absolute;left:0;top:9px;width:9px;height:9px;
+    background:var(--red);border-radius:2px}
+
+  .links{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:8px}
+  .links a{color:var(--text);text-decoration:none;font-size:14px;border:1px solid var(--line);
+    background:rgba(255,255,255,.04);padding:10px 16px;border-radius:10px;transition:border-color .12s}
+  .links a:hover{border-color:rgba(240,192,64,.5)}
+
+  footer{margin-top:40px;text-align:center;color:#6b6b73;font-size:12px;line-height:1.7}
+  footer a{color:#8a8a92}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <img class="avatar" src="https://raw.githubusercontent.com/waibcam/rachtaz-stream-enhancer/main/icons/icon128.png" alt="RachtaZ Stream Enhancer" onerror="this.style.display='none'" />
+    <h1>RachtaZ Stream Enhancer</h1>
+    <p class="tag">Navigate RachtaZ stream VODs by timecodes — right inside YouTube.</p>
+    <span class="badge">Fan-made · unofficial · not affiliated with RachtaZ</span>
+  </header>
+
+  <h2>Get the extension</h2>
+  <div class="grid" id="downloads"></div>
+
+  <h2>What it does</h2>
+  <ul class="features">
+    <li>Timeline chapter markers per game</li>
+    <li>Clickable game list (key L)</li>
+    <li>Previous / Next buttons + N / P shortcuts</li>
+    <li>Shareable timestamped links</li>
+    <li>Gold seek bar on RachtaZ videos</li>
+    <li>Resume where you left off</li>
+    <li>One-click like (manual, never automatic)</li>
+    <li>No ads, no tracking — everything stays local</li>
+  </ul>
+
+  <h2>Source &amp; support</h2>
+  <div class="links">
+    <a href="https://github.com/waibcam/rachtaz-stream-enhancer" target="_blank" rel="noopener">Source code (GitHub)</a>
+    <a href="https://github.com/waibcam/rachtaz-stream-enhancer/issues" target="_blank" rel="noopener">Report a bug / support</a>
+    <a href="https://github.com/waibcam/rachtaz-stream-enhancer/blob/main/PRIVACY.md" target="_blank" rel="noopener">Privacy</a>
+    <a href="https://github.com/waibcam/rachtaz-stream-enhancer/releases" target="_blank" rel="noopener">Download .zip (releases)</a>
+  </div>
+
+  <footer>
+    Made by <a href="https://www.youtube.com/@RachtaZ" target="_blank" rel="noopener">@Kamille92</a> for the
+    <a href="https://www.youtube.com/@RachtaZ" target="_blank" rel="noopener">@RachtaZ</a> community.<br>
+    Unofficial fan project. "RachtaZ", the channel name and avatar belong to their owner.
+  </footer>
+
+</div>
+
+<script>
+  var CWS = "https://chromewebstore.google.com/detail/eljgclobblhfngpnfgkoncdjpnmffbll";
+  var GLOBE = '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 16 0 18M12 3c-2.5 2.5-2.5 16 0 18"/></svg>';
+
+  var BROWSERS = [
+    {key:"chrome",  name:"Chrome",  state:"Available",  cls:"ok",  url:CWS, cta:"Add to Chrome", note:"", kind:""},
+    {key:"edge",    name:"Edge",    state:"In review",  cls:"rev", url:CWS, cta:"Install via Chrome Web Store", note:"Native Edge listing in review", kind:"alt"},
+    {key:"opera",   name:"Opera",   state:"In review",  cls:"rev", url:CWS, cta:"Install via Chrome Web Store", note:"Native Opera listing in review", kind:"alt"},
+    {key:"firefox", name:"Firefox", state:"In review",  cls:"rev", url:null, cta:"Coming soon", note:"In review on Firefox Add-ons", kind:"soon"}
+  ];
+
+  function detect(){
+    var ua = navigator.userAgent;
+    if(/Edg\//.test(ua)) return "edge";
+    if(/OPR\//.test(ua) || / Opera/.test(ua)) return "opera";
+    if(/Firefox\//.test(ua)) return "firefox";
+    if(/Chrome\//.test(ua)) return "chrome";
+    return null;
+  }
+
+  var mine = detect();
+  var html = BROWSERS.map(function(b){
+    var tag = b.url ? "a" : "div";
+    var href = b.url ? ' href="'+b.url+'" target="_blank" rel="noopener"' : "";
+    var cls = "card" + (b.kind ? " "+b.kind : "") + (b.key===mine ? " rec-on" : "");
+    var rec = b.key===mine ? '<span class="rec">Detected — recommended</span>' : "";
+    return "<"+tag+' class="'+cls+'"'+href+">"+rec+GLOBE+
+      '<div class="name">'+b.name+'</div>'+
+      '<div class="state '+b.cls+'">'+b.state+'</div>'+
+      '<div class="cta">'+b.cta+'</div>'+
+      '<div class="note">'+b.note+'</div>'+
+      "</"+tag+">";
+  }).join("");
+  document.getElementById("downloads").innerHTML = html;
+</script>
+</body>
+</html>
